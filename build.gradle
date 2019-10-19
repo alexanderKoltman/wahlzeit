@@ -76,6 +76,7 @@ test {
 }
 
 appengine {
+    delete 'build'
     httpPort = 8080
     downloadSdk = true
     jvmFlags = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000']
