@@ -137,7 +137,7 @@ public class Photo extends DataObject {
 	Key parent = ObjectManager.applicationRootKey;
 
 	/**
-	 *
+	 * @methodtype constructor
 	 */
 	public Photo() {
 		id = PhotoId.getNextId();
@@ -227,7 +227,7 @@ public class Photo extends DataObject {
 	}
 
 	/**
-	 *
+	 * @methodtype get
 	 */
 	public Language getOwnerLanguage() {
 		return ownerLanguage;
@@ -401,10 +401,16 @@ public class Photo extends DataObject {
 	}
 
 
+	/**
+	 * @methodtype get
+	 */
 	public String getEnding() {
 		return ending;
 	}
 
+	/**
+	 * @methodtype set
+	 */
 	public void setEnding(String ending) {
 		this.ending = ending;
 	}

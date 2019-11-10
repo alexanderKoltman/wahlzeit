@@ -12,6 +12,11 @@ public class Coordinate {
     private final double z;
 
     /**
+     * Describes the allowed difference between the difference of two floating-point numbers.
+     */
+    private static final double EPSILON = 10E-5;
+
+    /**
      * Creates a new 3D Coordinate with its corresponding coordinates x, y, z.
      */
     public Coordinate(double x, double y, double z) {
@@ -48,7 +53,7 @@ public class Coordinate {
             return false;
         }
 
-        return x == coordinate.x && y == coordinate.y && z == coordinate.z;
+        return Math.abs(x - coordinate.x) < EPSILON && Math.abs(y - coordinate.y) < EPSILON && Math.abs(z - coordinate.z) < EPSILON;
     }
 
     /**

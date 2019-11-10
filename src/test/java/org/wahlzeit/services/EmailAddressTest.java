@@ -21,6 +21,7 @@
 package org.wahlzeit.services;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Test cases for the EmailAddress class.
@@ -37,6 +38,7 @@ public class EmailAddressTest extends TestCase {
 	/**
 	 *
 	 */
+	@Test
 	public void testGetEmailAddressFromString() {
 		// invalid email addresses are allowed for local testing and online avoided by Google
 
@@ -62,10 +64,12 @@ public class EmailAddressTest extends TestCase {
 	/**
 	 *
 	 */
+	@Test
 	public void testEmptyEmailAddress() {
 		assertFalse(EmailAddress.EMPTY.isValid());
 	}
 
+	@Test
 	public void testIsEqual(){
 		EmailAddress emailAddress = EmailAddress.getFromString("luke.skywalker@mailinator.com");
 		EmailAddress otherEmailAddress = EmailAddress.getFromString("yoda@mailinator.com");
