@@ -11,7 +11,7 @@ public class LocationTest {
 
     @Test
     public void testConstructor() {
-        Location location = new Location(new Coordinate(4, 3, 2));
-        assertEquals(location.coordinate, new Coordinate(4, 3, 2));
+        Location location = new Location(new CartesianCoordinate(4, 3, 2));
+        assertEquals(location.coordinate, new CartesianCoordinate(4, 3, 2));
     }
 }
