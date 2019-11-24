@@ -28,7 +28,7 @@ wrapper {
 gradle.taskGraph.whenReady {
     graph ->
     if (System.env.'JAVA_HOME' == null) {
-        throw new GradleException("JAVA_HOME not set. Please set it, otherwise this task can not be executed.")
+        throw new GradleException("JAVA_HOME not set. Please set it, otherwise this task can not be executed.") as Throwable
     }
     else {
         println "JAVA_HOME = " + System.env.'JAVA_HOME'

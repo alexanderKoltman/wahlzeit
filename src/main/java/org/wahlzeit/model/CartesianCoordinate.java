@@ -3,7 +3,7 @@ package org.wahlzeit.model;
 /**
  * Represents a 3D cartesian Coordinate.
  */
-public class CartesianCoordinate implements Coordinate {
+public class CartesianCoordinate extends AbstractCoordinate {
     /**
      * Cartesian coordinates.
      */
@@ -20,11 +20,6 @@ public class CartesianCoordinate implements Coordinate {
         this.x = x;
         this.y = y;
         this.z = z;
-    }
-
-    @Override
-    public CartesianCoordinate asCartesianCoordinate() {
-        return this;
     }
 
     @Override
@@ -55,11 +50,6 @@ public class CartesianCoordinate implements Coordinate {
     }
 
     @Override
-    public double getCentralAngle(Coordinate coordinate) {
-        return asSphericCoordinate().getCentralAngle(coordinate);
-    }
-
-    @Override
     public boolean isEqual(Coordinate coordinate) {
         if (coordinate == null) {
             return false;
@@ -67,21 +57,5 @@ public class CartesianCoordinate implements Coordinate {
 
         CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
         return Math.abs(x - cartesianCoordinate.x) < EPSILON && Math.abs(y - cartesianCoordinate.y) < EPSILON && Math.abs(z - cartesianCoordinate.z) < EPSILON;
-    }
-
-    /**
-     * Checks for equality.
-     *
-     * @param object Object.
-     * @return true, if the object has the same values,
-     * false otherwise.
-     */
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof CartesianCoordinate)) {
-            return false;
-        }
-
-        return isEqual((CartesianCoordinate) object);
     }
 }

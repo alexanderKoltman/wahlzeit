@@ -3,7 +3,7 @@ package org.wahlzeit.model;
 /**
  * Represents a 3D spheric Coordinate.
  */
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate {
     /**
      * Spheric coordinates.
      */
@@ -61,16 +61,6 @@ public class SphericCoordinate implements Coordinate {
     }
 
     @Override
-    public SphericCoordinate asSphericCoordinate() {
-        return this;
-    }
-
-    @Override
-    public double getCartesianDistance(Coordinate coordinate) {
-        return asCartesianCoordinate().getCartesianDistance(coordinate);
-    }
-
-    @Override
     public double getCentralAngle(Coordinate coordinate) {
         if (coordinate == null) {
             throw new NullPointerException("Parameter 'coordinate' was null inside method 'getCentralAngle'.");
@@ -89,21 +79,5 @@ public class SphericCoordinate implements Coordinate {
 
         SphericCoordinate sphericCoordinate = coordinate.asSphericCoordinate();
         return Math.abs(phi - sphericCoordinate.phi) < EPSILON && Math.abs(theta - sphericCoordinate.theta) < EPSILON && Math.abs(radius - sphericCoordinate.radius) < EPSILON;
-    }
-
-    /**
-     * Checks for equality.
-     *
-     * @param object Object.
-     * @return true, if the object has the same values,
-     * false otherwise.
-     */
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof SphericCoordinate)) {
-            return false;
-        }
-
-        return isEqual((SphericCoordinate) object);
     }
 }
