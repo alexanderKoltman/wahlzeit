@@ -22,6 +22,8 @@ public class SphericCoordinate extends AbstractCoordinate {
         this.phi = phi;
         this.theta = theta;
         this.radius = radius;
+
+        assertClassInvariants();
     }
 
     /**
@@ -57,6 +59,10 @@ public class SphericCoordinate extends AbstractCoordinate {
         double y = radius * Math.sin(theta) * Math.sin(phi);
         double z = radius * Math.cos(theta);
 
+        assert Double.isFinite(x);
+        assert Double.isFinite(y);
+        assert Double.isFinite(z);
+
         return new CartesianCoordinate(x, y, z);
     }
 
@@ -68,7 +74,10 @@ public class SphericCoordinate extends AbstractCoordinate {
 
         SphericCoordinate sphericCoordinate = coordinate.asSphericCoordinate();
         double delta = Math.abs(phi - sphericCoordinate.phi);
-        return Math.acos(Math.sin(theta) * Math.sin(sphericCoordinate.theta) + Math.cos(theta) * Math.cos(sphericCoordinate.theta) * Math.cos(delta));
+        double result = Math.acos(Math.sin(theta) * Math.sin(sphericCoordinate.theta) + Math.cos(theta) * Math.cos(sphericCoordinate.theta) * Math.cos(delta));
+        assert Double.isFinite(result);
+
+        return result;
     }
 
     @Override
@@ -79,5 +88,14 @@ public class SphericCoordinate extends AbstractCoordinate {
 
         SphericCoordinate sphericCoordinate = coordinate.asSphericCoordinate();
         return Math.abs(phi - sphericCoordinate.phi) < EPSILON && Math.abs(theta - sphericCoordinate.theta) < EPSILON && Math.abs(radius - sphericCoordinate.radius) < EPSILON;
+    }
+
+    /**
+     * @methodtype assert
+     */
+    protected void assertClassInvariants() {
+        assert Double.isFinite(phi) && phi < 2 * Math.PI && phi >= 0.0;
+        assert Double.isFinite(theta) && theta <= Math.PI && theta >= 0.0;
+        assert Double.isFinite(radius) && radius >= 0;
     }
 }

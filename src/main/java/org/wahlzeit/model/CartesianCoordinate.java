@@ -20,6 +20,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
         this.x = x;
         this.y = y;
         this.z = z;
+
+        assertClassInvariants();
     }
 
     @Override
@@ -46,7 +48,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
         }
 
         CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
-        return Math.sqrt(Math.pow(x - cartesianCoordinate.x, 2) + Math.pow(y - cartesianCoordinate.y, 2) + Math.pow(z - cartesianCoordinate.z, 2));
+        double result = Math.sqrt(Math.pow(x - cartesianCoordinate.x, 2) + Math.pow(y - cartesianCoordinate.y, 2) + Math.pow(z - cartesianCoordinate.z, 2));
+
+        assert Double.isFinite(result) && result >= 0;
+        return result;
     }
 
     @Override
@@ -57,5 +62,14 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
         CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
         return Math.abs(x - cartesianCoordinate.x) < EPSILON && Math.abs(y - cartesianCoordinate.y) < EPSILON && Math.abs(z - cartesianCoordinate.z) < EPSILON;
+    }
+
+    /**
+     * @methodtype assert
+     */
+    protected void assertClassInvariants() {
+        assert Double.isFinite(x);
+        assert Double.isFinite(y);
+        assert Double.isFinite(z);
     }
 }
