@@ -65,6 +65,9 @@ public class FlagPhotoFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected void doMakeWebPart(UserSession us, WebPart part) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(part, "'WebPart'");
+
 		Map args = us.getSavedArgs();
 		part.addStringFromArgs(args, UserSession.MESSAGE);
 
@@ -81,6 +84,8 @@ public class FlagPhotoFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected String doHandlePost(UserSession us, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		String id = us.getAndSaveAsString(args, Photo.ID);
 		String flagger = us.getAndSaveAsString(args, PhotoCase.FLAGGER);
 		FlagReason reason = FlagReason.getFromString(us.getAndSaveAsString(args, PhotoCase.REASON));

@@ -12,9 +12,12 @@ public class SphericCoordinate extends AbstractCoordinate {
     private final double radius;
 
     /**
+     * @param phi    must be in the range [phi < 2 * Math.PI && phi >= 0.0]
+     * @param theta  must be in the range [theta <= Math.PI && theta >= 0.0]
+     * @param radius must bigger or equal zero
      * @methodtype constructor
      */
-    public SphericCoordinate(double phi, double theta, double radius) {
+    public SphericCoordinate(double phi, double theta, double radius) throws IllegalArgumentException {
         checkPhi(phi);
         checkTheta(theta);
         checkRadius(radius);
@@ -23,7 +26,11 @@ public class SphericCoordinate extends AbstractCoordinate {
         this.theta = theta;
         this.radius = radius;
 
-        assertClassInvariants();
+        try {
+            assertClassInvariants();
+        } catch (AssertionError error) {
+            throw new IllegalArgumentException("Parameters (x|y|z) must be floating-point values and in a valid range.");
+        }
     }
 
     /**
@@ -67,7 +74,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
     @Override
-    public double getCentralAngle(Coordinate coordinate) {
+    public double getCentralAngle(Coordinate coordinate) throws NullPointerException {
         if (coordinate == null) {
             throw new NullPointerException("Parameter 'coordinate' was null inside method 'getCentralAngle'.");
         }
@@ -93,7 +100,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     /**
      * @methodtype assert
      */
-    protected void assertClassInvariants() {
+    private void assertClassInvariants() throws AssertionError {
         assert Double.isFinite(phi) && phi < 2 * Math.PI && phi >= 0.0;
         assert Double.isFinite(theta) && theta <= Math.PI && theta >= 0.0;
         assert Double.isFinite(radius) && radius >= 0;

@@ -61,6 +61,9 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected void doMakeWebPart(UserSession us, WebPart part) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(part, "'WebPart'");
+
 		Map<String, Object> args = us.getSavedArgs();
 		ModelConfig config = us.getClient().getLanguageConfiguration();
 		part.addStringFromArgs(args, UserSession.MESSAGE);
@@ -83,6 +86,8 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected boolean isWellFormedPost(UserSession us, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		String id = us.getAsString(args, Photo.ID);
 		Photo photo = PhotoManager.getInstance().getPhoto(id);
 		return (photo != null) && us.isPhotoOwner(photo);
@@ -92,6 +97,8 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected String doHandlePost(UserSession us, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		String id = us.getAndSaveAsString(args, Photo.ID);
 		Photo photo = PhotoManager.getInstance().getPhoto(id);
 
@@ -114,5 +121,4 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 
 		return PartUtil.SHOW_NOTE_PAGE_NAME;
 	}
-
 }

@@ -52,6 +52,10 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 	 *
 	 */
 	protected String doHandleGet(UserSession us, String link, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(link, "'Link'");
+		assertIsNonNullArgument(args, "'Args'");
+
 		Photo photo = null;
 
 		if (!link.equals(PartUtil.SHOW_PHOTO_PAGE_NAME)) {
@@ -87,6 +91,8 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 	 *
 	 */
 	protected boolean isToShowAds(UserSession us) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		Client client = us.getClient();
 		Photo lastPraisedPhoto = client.getLastPraisedPhoto();
 		return lastPraisedPhoto != null;
@@ -96,6 +102,9 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 	 *
 	 */
 	protected void makeWebPageBody(UserSession us, WebPart page) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(page, "'WebPart'");
+
 		PhotoId photoId = us.getPhotoId();
 		Photo photo = PhotoManager.getInstance().getPhoto(photoId);
 
@@ -121,6 +130,9 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 	 *
 	 */
 	protected void makeLeftSidebar(UserSession us, WebPart page) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(page, "'WebPart'");
+
 		WritableList parts = new WritableList();
 
 		Client client = us.getClient();
@@ -144,6 +156,9 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 	 *
 	 */
 	protected void makePhoto(UserSession us, WebPart page) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(page, "'WebPart'");
+
 		Client client = us.getClient();
 		PhotoSize pagePhotoSize = client.getPhotoSize();
 
@@ -174,6 +189,9 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 	 *
 	 */
 	protected void makePhotoCaption(UserSession us, WebPart page) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(page, "'WebPart'");
+
 		PhotoId photoId = us.getPhotoId();
 		Photo photo = PhotoManager.getInstance().getPhoto(photoId);
 
@@ -186,6 +204,9 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 	 *
 	 */
 	protected void makeEngageGuest(UserSession us, WebPart page) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(page, "'WebPart'");
+
 		PhotoId photoId = us.getPhotoId();
 
 		WebPart engageGuest = createWebPart(us, PartUtil.ENGAGE_GUEST_FORM_FILE);
@@ -199,6 +220,9 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 	 *
 	 */
 	protected void makeRightSidebar(UserSession us, WebPart page) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(page, "'WebPart'");
+
 		String handlerName = PartUtil.NULL_FORM_NAME;
 		PhotoId photoId = us.getPhotoId();
 		Photo photo = PhotoManager.getInstance().getPhoto(photoId);
@@ -216,6 +240,8 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 	 *
 	 */
 	protected WebPart makePriorPhotoInfo(UserSession us, Photo lastPraisedPhoto) {
+		assertIsNonNullArgument(lastPraisedPhoto, "'Photo'");
+
 		WebPart result = createWebPart(us, PartUtil.PHOTO_INFO_FILE);
 
 		result.addString(Photo.PRAISE, lastPraisedPhoto.getPraiseAsString(us.getClient().getLanguageConfiguration()));
@@ -229,6 +255,8 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 	 *
 	 */
 	public String handlePost(UserSession us, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		String result = PartUtil.DEFAULT_PAGE_NAME;
 
 		String id = us.getAndSaveAsString(args, Photo.ID);

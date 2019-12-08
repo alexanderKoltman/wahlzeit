@@ -68,6 +68,8 @@ public class SendEmailFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected String doHandleGet(UserSession us, String link, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		if (!(us.getClient() instanceof User)) {
 			us.setHeading(us.getClient().getLanguageConfiguration().getInformation());
 			us.setMessage(us.getClient().getLanguageConfiguration().getNeedToSignupFirst());
@@ -81,6 +83,9 @@ public class SendEmailFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected void doMakeWebPart(UserSession us, WebPart part) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(part, "'WebPart'");
+
 		Map args = us.getSavedArgs();
 		part.addStringFromArgs(args, UserSession.MESSAGE);
 
@@ -102,6 +107,8 @@ public class SendEmailFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected boolean isWellFormedPost(UserSession us, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		return PhotoManager.getInstance().getPhoto(us.getAsString(args, Photo.ID)) != null;
 	}
 
@@ -109,6 +116,8 @@ public class SendEmailFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected String doHandlePost(UserSession us, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		String id = us.getAndSaveAsString(args, Photo.ID);
 		Photo photo = PhotoManager.getInstance().getPhoto(id);
 

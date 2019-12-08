@@ -29,6 +29,11 @@ public class CartesianCoordinateTest {
         sphericCoordinateTwo = new SphericCoordinate(1.0, 1.0, 1.0);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorShouldThrowExceptionWhenArgumentIsNotAFloatingValue() {
+        new CartesianCoordinate(Double.NaN, 0.0, 0.0);
+    }
+
     @Test
     public void testAsCartesianCoordinate() {
         assertSame(cartesianCoordinateOne, cartesianCoordinateOne.asCartesianCoordinate());

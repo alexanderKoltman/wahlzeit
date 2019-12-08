@@ -25,7 +25,7 @@ import java.util.Random;
 
 /**
  * A photo id identifies a photo with a unique number.
- * The number has an equivalent string for web access. 
+ * The number has an equivalent string for web access.
  * This class also hands out the ids.
  */
 public class PhotoId implements Serializable {
@@ -230,6 +230,10 @@ public class PhotoId implements Serializable {
 	 *
 	 */
 	public static int getFromString(String value) {
+		if (value == null) {
+			throw new IllegalArgumentException("String 'value' = null!");
+		}
+
 		int result = 0;
 		for (int i = 1; i < value.length(); i++) {
 			int temp = 0;

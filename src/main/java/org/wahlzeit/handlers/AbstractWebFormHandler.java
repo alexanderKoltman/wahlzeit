@@ -61,6 +61,8 @@ public abstract class AbstractWebFormHandler extends AbstractWebPartHandler impl
 	 *
 	 */
 	public final String handlePost(UserSession us, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		String emailAddress = us.getClient().getEmailAddress().asString();
 		if (!hasAccessRights(us, args)) {
 			log.warning(LogBuilder.createSystemMessage().

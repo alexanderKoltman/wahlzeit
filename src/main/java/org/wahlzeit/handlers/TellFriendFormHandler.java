@@ -61,6 +61,9 @@ public class TellFriendFormHandler extends AbstractWebFormHandler {
 	 * @methodtype command
 	 */
 	protected void doMakeWebPart(UserSession us, WebPart part) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(part, "'WebPart'");
+
 		Map args = us.getSavedArgs();
 		ModelConfig config = us.getClient().getLanguageConfiguration();
 		part.addStringFromArgs(args, UserSession.MESSAGE);
@@ -86,6 +89,8 @@ public class TellFriendFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected String doHandlePost(UserSession us, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		String friendsEmailAddress = us.getAndSaveAsString(args, EMAIL_TO);
 		String emailSubject = us.getAndSaveAsString(args, EMAIL_SUBJECT);
 		String emailBody = us.getAndSaveAsString(args, EMAIL_BODY);

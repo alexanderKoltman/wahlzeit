@@ -53,6 +53,9 @@ public class PraisePhotoFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected void doMakeWebPart(UserSession us, WebPart part) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(part, "'WebPart'");
+
 		PhotoId photoId = us.getPhotoId();
 		if (photoId != null) {
 			part.addString(Photo.ID, photoId.asString());
@@ -63,6 +66,8 @@ public class PraisePhotoFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected boolean isWellFormedPost(UserSession us, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		String photoId = us.getAsString(args, Photo.ID);
 		Photo photo = PhotoManager.getInstance().getPhoto(photoId);
 		return photo != null;
@@ -72,6 +77,8 @@ public class PraisePhotoFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected String doHandlePost(UserSession us, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		String photoId = us.getAsString(args, Photo.ID);
 		Photo photo = PhotoManager.getInstance().getPhoto(photoId);
 		String praise = us.getAsString(args, Photo.PRAISE);

@@ -52,6 +52,9 @@ public class AdminUserPhotoFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected void doMakeWebPart(UserSession us, WebPart part) {
+		assertIsNonNullArgument(us, "'UserSession'");
+		assertIsNonNullArgument(part, "'WebPart'");
+
 		String photoId = (String) us.getSavedArg("photoId");
 		Photo photo = PhotoManager.getInstance().getPhoto(photoId);
 		part.addString(Photo.THUMB, getPhotoThumb(us, photo));
@@ -66,6 +69,8 @@ public class AdminUserPhotoFormHandler extends AbstractWebFormHandler {
 	 *
 	 */
 	protected String doHandlePost(UserSession us, Map args) {
+		assertIsNonNullArgument(us, "'UserSession'");
+
 		String id = us.getAndSaveAsString(args, "photoId");
 		Photo photo = PhotoManager.getInstance().getPhoto(id);
 

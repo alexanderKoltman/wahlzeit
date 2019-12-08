@@ -329,6 +329,8 @@ public class PhotoManager extends ObjectManager {
 	 *
 	 */
 	public Photo getVisiblePhoto(PhotoFilter filter) {
+		assertIsNonNullArgument(filter, "PhotoFilter");
+
 		filter.generateDisplayablePhotoIds();
 		return getPhotoFromId(filter.getRandomDisplayablePhotoId());
 	}
@@ -337,6 +339,9 @@ public class PhotoManager extends ObjectManager {
 	 *
 	 */
 	public Photo createPhoto(String filename, Image uploadedImage) throws Exception {
+		assertIsNonNullArgument(filename, "'Filename'");
+		assertIsNonNullArgument(uploadedImage, "'UploadedImage'");
+
 		PhotoId id = PhotoId.getNextId();
 		Photo result = PhotoUtil.createPhoto(filename, id, uploadedImage);
 		addPhoto(result);
@@ -346,7 +351,9 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 * @methodtype command
 	 */
-	public void addPhoto(Photo photo) throws IOException {
+	public void addPhoto(Photo photo) {
+		assertIsNonNullArgument(photo, "'Photo'");
+
 		PhotoId id = photo.getId();
 		assertIsNewPhoto(id);
 		doAddPhoto(photo);
@@ -362,5 +369,4 @@ public class PhotoManager extends ObjectManager {
 			throw new IllegalStateException("Photo already exists!");
 		}
 	}
-
 }

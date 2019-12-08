@@ -12,22 +12,22 @@ public interface Coordinate {
     /**
      * @methodtype conversion
      */
-    CartesianCoordinate asCartesianCoordinate();
+    CartesianCoordinate asCartesianCoordinate() throws IllegalArgumentException;
 
     /**
      * @methodtype conversion
      */
-    SphericCoordinate asSphericCoordinate();
+    SphericCoordinate asSphericCoordinate() throws IllegalArgumentException;
 
     /**
      * @methodtype get
      */
-    double getCartesianDistance(Coordinate coordinate);
+    double getCartesianDistance(Coordinate coordinate) throws NullPointerException;
 
     /**
      * @methodtype get
      */
-    double getCentralAngle(Coordinate coordinate);
+    double getCentralAngle(Coordinate coordinate) throws NullPointerException;
 
     /**
      * @methodtype boolean-query

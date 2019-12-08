@@ -16,12 +16,16 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype constructor
      */
-    public CartesianCoordinate(double x, double y, double z) {
+    public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
         this.x = x;
         this.y = y;
         this.z = z;
 
-        assertClassInvariants();
+        try {
+            assertClassInvariants();
+        } catch (AssertionError error) {
+            throw new IllegalArgumentException("Parameters (x|y|z) must be floating-point values.");
+        }
     }
 
     @Override
@@ -30,11 +34,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
         double theta = 0;
         double radius = Math.sqrt(x * x + y * y + z * z);
 
-        if(x != 0) {
+        if (x != 0) {
             phi = Math.atan2(y, x);
         }
 
-        if(radius != 0){
+        if (radius != 0) {
             theta = Math.acos(z / radius);
         }
 
@@ -42,7 +46,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     @Override
-    public double getCartesianDistance(Coordinate coordinate) {
+    public double getCartesianDistance(Coordinate coordinate) throws NullPointerException {
         if (coordinate == null) {
             throw new NullPointerException("Parameter 'coordinate' was null inside method 'getCartesianDistance'.");
         }
@@ -67,7 +71,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     /**
      * @methodtype assert
      */
-    protected void assertClassInvariants() {
+    private void assertClassInvariants() throws AssertionError {
         assert Double.isFinite(x);
         assert Double.isFinite(y);
         assert Double.isFinite(z);

@@ -31,6 +31,11 @@ public class SphericCoordinateTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void testConstructorShouldThrowExceptionWhenArgumentIsNotAFloatingValue() {
+        new SphericCoordinate(Double.NaN, 0.0, 0.0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void testConstructorShouldThrowExceptionWhenPhiIsNegative() {
         new SphericCoordinate(-1, 0.0, 0.0);
     }

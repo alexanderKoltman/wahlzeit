@@ -9,7 +9,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      * @methodtype get
      */
     @Override
-    public double getCartesianDistance(Coordinate coordinate) {
+    public double getCartesianDistance(Coordinate coordinate) throws NullPointerException {
         return asCartesianCoordinate().getCartesianDistance(coordinate);
     }
 
@@ -17,7 +17,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      * @methodtype get
      */
     @Override
-    public double getCentralAngle(Coordinate coordinate) {
+    public double getCentralAngle(Coordinate coordinate) throws NullPointerException {
         return asSphericCoordinate().getCentralAngle(coordinate);
     }
 
@@ -40,7 +40,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      */
     @Override
     public boolean equals(Object object) {
-        if(!(object instanceof CartesianCoordinate) && !(object instanceof SphericCoordinate)){
+        if (!(object instanceof CartesianCoordinate) && !(object instanceof SphericCoordinate)) {
             return false;
         } else {
             return isEqual((Coordinate) object);
