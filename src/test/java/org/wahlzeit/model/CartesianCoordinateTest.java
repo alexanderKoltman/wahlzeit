@@ -22,22 +22,23 @@ public class CartesianCoordinateTest {
 
     @Before
     public void init() {
-        cartesianCoordinateOne = new CartesianCoordinate(0.0, 0.0, 0.0);
-        cartesianCoordinateTwo = new CartesianCoordinate(1.0, 1.0, 1.0);
+        cartesianCoordinateOne = CartesianCoordinate.create(0.0, 0.0, 0.0);
+        cartesianCoordinateTwo = CartesianCoordinate.create(1.0, 1.0, 1.0);
 
-        sphericCoordinateOne = new SphericCoordinate(0.0, 0.0, 0.0);
-        sphericCoordinateTwo = new SphericCoordinate(1.0, 1.0, 1.0);
+        sphericCoordinateOne = SphericCoordinate.create(0.0, 0.0, 0.0);
+        sphericCoordinateTwo = SphericCoordinate.create(1.0, 1.0, 1.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorShouldThrowExceptionWhenArgumentIsNotAFloatingValue() {
-        new CartesianCoordinate(Double.NaN, 0.0, 0.0);
+        CartesianCoordinate.create(Double.NaN, 0.0, 0.0);
     }
 
     @Test
     public void testAsCartesianCoordinate() {
         assertSame(cartesianCoordinateOne, cartesianCoordinateOne.asCartesianCoordinate());
-        assertNotSame(cartesianCoordinateOne, sphericCoordinateOne.asCartesianCoordinate());
+        assertSame(cartesianCoordinateOne, sphericCoordinateOne.asCartesianCoordinate());
+        assertNotSame(cartesianCoordinateOne, sphericCoordinateTwo.asCartesianCoordinate());
     }
 
     @Test

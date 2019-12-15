@@ -23,47 +23,48 @@ public class SphericCoordinateTest {
 
     @Before
     public void init() {
-        cartesianCoordinateOne = new CartesianCoordinate(0.0, 0.0, 0.0);
-        cartesianCoordinateTwo = new CartesianCoordinate(1.0, 1.0, 1.0);
+        cartesianCoordinateOne = CartesianCoordinate.create(0.0, 0.0, 0.0);
+        cartesianCoordinateTwo = CartesianCoordinate.create(1.0, 1.0, 1.0);
 
-        sphericCoordinateOne = new SphericCoordinate(0.0, 0.0, 0.0);
-        sphericCoordinateTwo = new SphericCoordinate(1.0, 1.0, 1.0);
+        sphericCoordinateOne = SphericCoordinate.create(0.0, 0.0, 0.0);
+        sphericCoordinateTwo = SphericCoordinate.create(1.0, 1.0, 1.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorShouldThrowExceptionWhenArgumentIsNotAFloatingValue() {
-        new SphericCoordinate(Double.NaN, 0.0, 0.0);
+        SphericCoordinate.create(Double.NaN, 0.0, 0.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorShouldThrowExceptionWhenPhiIsNegative() {
-        new SphericCoordinate(-1, 0.0, 0.0);
+        SphericCoordinate.create(-1, 0.0, 0.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorShouldThrowExceptionWhenPhiIsBiggerThan_2_MULT_PI() {
-        new SphericCoordinate(100, 0.0, 0.0);
+        SphericCoordinate.create(100, 0.0, 0.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorShouldThrowExceptionWhenThetaIsNegative() {
-        new SphericCoordinate(1.0, -1, 0.0);
+        SphericCoordinate.create(1.0, -1, 0.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorShouldThrowExceptionWhenThetaIsBiggerThanPI() {
-        new SphericCoordinate(1.0, 100, 0.0);
+        SphericCoordinate.create(1.0, 100, 0.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorShouldThrowExceptionWhenRadiusIsNegative() {
-        new SphericCoordinate(1, 1, -1);
+        SphericCoordinate.create(1, 1, -1);
     }
 
     @Test
     public void testAsSphericCoordinate() {
         assertSame(sphericCoordinateOne, sphericCoordinateOne.asSphericCoordinate());
-        assertNotSame(sphericCoordinateOne, cartesianCoordinateOne.asSphericCoordinate());
+        assertSame(sphericCoordinateOne, cartesianCoordinateOne.asSphericCoordinate());
+        assertNotSame(sphericCoordinateOne, cartesianCoordinateTwo.asSphericCoordinate());
     }
 
     @Test

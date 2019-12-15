@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+
 /**
  * Represents a 3D spheric Coordinate.
  */
@@ -11,13 +13,16 @@ public class SphericCoordinate extends AbstractCoordinate {
     private final double theta;
     private final double radius;
 
+    // manages instances of shared value objects
+    private static final HashMap<Integer, SphericCoordinate> mapOfSphericCoordinates = new HashMap<>();
+
     /**
      * @param phi    must be in the range [phi < 2 * Math.PI && phi >= 0.0]
      * @param theta  must be in the range [theta <= Math.PI && theta >= 0.0]
      * @param radius must bigger or equal zero
      * @methodtype constructor
      */
-    public SphericCoordinate(double phi, double theta, double radius) throws IllegalArgumentException {
+    private SphericCoordinate(double phi, double theta, double radius) throws IllegalArgumentException {
         checkPhi(phi);
         checkTheta(theta);
         checkRadius(radius);
@@ -31,6 +36,24 @@ public class SphericCoordinate extends AbstractCoordinate {
         } catch (AssertionError error) {
             throw new IllegalArgumentException("Parameters (x|y|z) must be floating-point values and in a valid range.");
         }
+    }
+
+    /**
+     * @methodtype factory
+     */
+    public static SphericCoordinate create(double phi, double theta, double radius) {
+        SphericCoordinate sphericCoordinate = new SphericCoordinate(phi, theta, radius);
+        Integer key = sphericCoordinate.hashCode();
+
+        SphericCoordinate result = mapOfSphericCoordinates.get(key);
+        if (result == null) {
+            synchronized (SphericCoordinate.class) {
+                mapOfSphericCoordinates.putIfAbsent(key, sphericCoordinate);
+                result = sphericCoordinate;
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -70,7 +93,7 @@ public class SphericCoordinate extends AbstractCoordinate {
         assert Double.isFinite(y);
         assert Double.isFinite(z);
 
-        return new CartesianCoordinate(x, y, z);
+        return CartesianCoordinate.create(x, y, z);
     }
 
     @Override
@@ -104,5 +127,18 @@ public class SphericCoordinate extends AbstractCoordinate {
         assert Double.isFinite(phi) && phi < 2 * Math.PI && phi >= 0.0;
         assert Double.isFinite(theta) && theta <= Math.PI && theta >= 0.0;
         assert Double.isFinite(radius) && radius >= 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(phi);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(theta);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(radius);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }

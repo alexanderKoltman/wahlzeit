@@ -1,5 +1,8 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+import java.util.Objects;
+
 /**
  * Represents a 3D cartesian Coordinate.
  */
@@ -11,12 +14,15 @@ public class CartesianCoordinate extends AbstractCoordinate {
     private final double y;
     private final double z;
 
+    // manages instances of shared value objects
+    private static final HashMap<Integer, CartesianCoordinate> mapOfCartesianCoordinates = new HashMap<>();
+
     /**
      * Creates a new 3D Coordinate with its corresponding coordinates x, y, z.
      *
      * @methodtype constructor
      */
-    public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
+    private CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -26,6 +32,24 @@ public class CartesianCoordinate extends AbstractCoordinate {
         } catch (AssertionError error) {
             throw new IllegalArgumentException("Parameters (x|y|z) must be floating-point values.");
         }
+    }
+
+    /**
+     * @methodtype factory
+     */
+    public static CartesianCoordinate create(double x, double y, double z) {
+        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(x, y, z);
+        Integer key = cartesianCoordinate.hashCode();
+
+        CartesianCoordinate result = mapOfCartesianCoordinates.get(key);
+        if (result == null) {
+            synchronized (CartesianCoordinate.class) {
+                mapOfCartesianCoordinates.putIfAbsent(key, cartesianCoordinate);
+                result = cartesianCoordinate;
+            }
+        }
+
+        return result;
     }
 
     @Override
@@ -42,7 +66,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
             theta = Math.acos(z / radius);
         }
 
-        return new SphericCoordinate(phi, theta, radius);
+        return SphericCoordinate.create(phi, theta, radius);
     }
 
     @Override
@@ -75,5 +99,18 @@ public class CartesianCoordinate extends AbstractCoordinate {
         assert Double.isFinite(x);
         assert Double.isFinite(y);
         assert Double.isFinite(z);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(x);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(y);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(z);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }
