@@ -1,5 +1,6 @@
 package org.wahlzeit.services;
 
+import org.wahlzeit.annotation.PatternInstance;
 import org.wahlzeit.model.Client;
 import org.wahlzeit.model.UserManager;
 import org.wahlzeit.model.UserSession;
@@ -14,9 +15,13 @@ import java.io.StringWriter;
  * <code>Formatter</code> could not be used
  *
  * (see https://stackoverflow.com/questions/30345665/how-to-customize-logging-for-google-app-engine-java).
- * 
+ *
  * @review
  */
+@PatternInstance(
+		patternName = "Builder",
+		participants = {"LogBuilder"}
+)
 public class LogBuilder {
 
 	protected static final String LEVEL = "level";

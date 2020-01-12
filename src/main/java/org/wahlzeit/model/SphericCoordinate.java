@@ -1,10 +1,16 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.annotation.PatternInstance;
+
 import java.util.HashMap;
 
 /**
  * Represents a 3D spheric Coordinate.
  */
+@PatternInstance(
+        patternName = "Value Object",
+        participants = {"SphericCoordinate"}
+)
 public class SphericCoordinate extends AbstractCoordinate {
     /**
      * Spheric coordinates.
@@ -42,13 +48,13 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype factory
      */
     public static SphericCoordinate create(double phi, double theta, double radius) {
-        SphericCoordinate sphericCoordinate = new SphericCoordinate(phi, theta, radius);
-        Integer key = sphericCoordinate.hashCode();
+        Integer key = doGetHashCode(phi, theta, radius);
 
         SphericCoordinate result = mapOfSphericCoordinates.get(key);
         if (result == null) {
             synchronized (SphericCoordinate.class) {
-                mapOfSphericCoordinates.putIfAbsent(key, sphericCoordinate);
+                SphericCoordinate sphericCoordinate = new SphericCoordinate(phi, theta, radius);
+                mapOfSphericCoordinates.put(key, sphericCoordinate);
                 result = sphericCoordinate;
             }
         }
@@ -131,6 +137,10 @@ public class SphericCoordinate extends AbstractCoordinate {
 
     @Override
     public int hashCode() {
+        return doGetHashCode(phi, theta, radius);
+    }
+
+    private static int doGetHashCode(double phi, double theta, double radius) {
         int result;
         long temp;
         temp = Double.doubleToLongBits(phi);

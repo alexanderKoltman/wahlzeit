@@ -1,11 +1,16 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.annotation.PatternInstance;
+
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * Represents a 3D cartesian Coordinate.
  */
+@PatternInstance(
+        patternName = "Value Object",
+        participants = {"CartesianCoordinate"}
+)
 public class CartesianCoordinate extends AbstractCoordinate {
     /**
      * Cartesian coordinates.
@@ -38,13 +43,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype factory
      */
     public static CartesianCoordinate create(double x, double y, double z) {
-        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(x, y, z);
-        Integer key = cartesianCoordinate.hashCode();
+        Integer key = doGetHashCode(x, y, z);
 
         CartesianCoordinate result = mapOfCartesianCoordinates.get(key);
         if (result == null) {
             synchronized (CartesianCoordinate.class) {
-                mapOfCartesianCoordinates.putIfAbsent(key, cartesianCoordinate);
+                CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(x, y, z);
+                mapOfCartesianCoordinates.put(key, cartesianCoordinate);
                 result = cartesianCoordinate;
             }
         }
@@ -103,6 +108,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
     @Override
     public int hashCode() {
+        return doGetHashCode(x, y, z);
+    }
+
+    private static int doGetHashCode(double x, double y, double z) {
         int result;
         long temp;
         temp = Double.doubleToLongBits(x);
