@@ -4,6 +4,20 @@ import org.wahlzeit.services.DataObject;
 
 import java.util.Objects;
 
+/**
+ * Sequence of method calls that lead to the new object:
+ * - by Flower with the method Flower()/Flower(FlowerType flowerType)/Flower(FlowerType flowerType, String flowerName)
+ * - by FlowerManager with the method createFlower(String typeName) call
+ * - by FlowerType with the method createInstance() call
+ *
+ * Object creation solution as point in the solution space:
+ * - Delegation of object creation -> by delegating to a separate-object
+ * - Selection of Concrete class -> On-the-spot
+ * - Configuration of Class Mapping -> N/A
+ * - Instantiation of Concrete Class -> In-code
+ * - Initialization of New Object -> Default
+ * - Building of Object Structure -> Default
+ */
 public class Flower extends DataObject {
 
     private FlowerType flowerType;
