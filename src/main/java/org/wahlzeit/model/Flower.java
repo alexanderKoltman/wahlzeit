@@ -18,6 +18,12 @@ import java.util.Objects;
  * - Initialization of New Object -> Default
  * - Building of Object Structure -> Default
  */
+
+/**
+ * Binds the base object role in the collaboration (base object - type object collaboration) of {@link Flower} and {@link  FlowerType}.
+ * Binds the element role in the collaboration (manager element collaboration) of {@link FlowerManager} and {@link Flower}.
+ * Binds the service role in the collaboration (client service collaboration) of {@link FlowerPhoto} and {@link Flower}.
+ */
 public class Flower extends DataObject {
 
     private FlowerType flowerType;

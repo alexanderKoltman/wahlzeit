@@ -19,6 +19,10 @@ import com.googlecode.objectify.annotation.Entity;
  *
  * Represents a photo of a flower.
  */
+
+/**
+ * Binds the client role in the collaboration (client service collaboration) of {@link FlowerPhoto} and {@link Flower}.
+ */
 @Entity
 public class FlowerPhoto extends Photo {
 

@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Binds the type object role in the collaboration (base object - type object collaboration) of {@link Flower} and {@link  FlowerType}.
+ */
 public class FlowerType extends DataObject {
 
     private String flowerType;

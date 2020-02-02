@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+/**
+ * Binds the manager role in the collaboration (manager element collaboration) of {@link FlowerManager} and {@link Flower}.
+ */
 public class FlowerManager extends ObjectManager {
 
     protected static final FlowerManager instance = new FlowerManager();
